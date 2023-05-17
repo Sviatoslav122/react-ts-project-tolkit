@@ -1,13 +1,205 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+* {
+  box-sizing: border-box;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+html {
+  line-height: 1.2;
+  font-family: 'Jost', sans-serif;
 }
+
+body {
+  margin: 0;
+  padding: 0;
+  min-width: 320px;
+  width: 100%;
+  color: #fff;
+}
+
+a {
+  text-decoration: none;
+  transition: 0.3s;
+  color: inherit;
+}
+
+ul,
+li {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+}
+
+button {
+  padding: 0;
+  outline: none;
+  background: none;
+  border: none;
+}
+
+input:focus {
+  outline: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+  font-weight: normal;
+}
+
+.header {
+  width: 1100px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 auto;
+  padding: 10px;
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #000;
+}
+
+.header .nav-menu a {
+  padding: 10px;
+}
+
+.header .buttons button {
+  margin: 0 30px 0 0;
+}
+
+.dashboard {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: no-repeat center/100% url("Image/original-6b11cbb03d2fe31957fa7952698c2e9d.webp") ;
+}
+
+.dashboard .dashboard-info {
+  background: black;
+  width: 600px;
+  height: 350px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.dashboard .dashboard-info h1, p {
+  background: #000;
+  padding: 10px;
+}
+
+.dashboard .dashboard-info input {
+  margin: 20px 0 0 0;
+}
+.Container-MovieList{
+  height: 1000px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: no-repeat center/100% url("Image/original-6b11cbb03d2fe31957fa7952698c2e9d.webp") ;
+
+}
+.clicker-top{
+  display: flex;
+  justify-content: space-between;
+
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+
+  width: 1150px;
+  height: 50px;
+  background-color: transparent;
+}
+.Container-Movies{
+  width: 1100px;
+  height: 700px;
+
+  background-color: red;
+}
+
+
+.clicker-button {
+  width: 40px;
+  height: 40px;
+  border: none;
+  background-color: transparent;
+  outline: none;
+  cursor: pointer;
+  position: relative;
+}
+
+.clicker-button::before {
+  content: "";
+  display: block;
+  width: 0;
+  height: 0;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: all 0.2s ease; /* Анімація зміни кольору та розміру */
+}
+
+#Left-clicker::before {
+  border-right: 10px solid black;
+  left: 10px;
+}
+
+#Right-clicker::before {
+  border-left: 10px solid black;
+  left: 20px;
+}
+
+.clicker-button:hover::before {
+
+  transform: translateY(-50%) scale(1.2);
+}
+
+
+.Container-Movies{
+ padding: 15px;
+  display: flex;
+  justify-content: space-between;
+}
+.click-movies-page{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  width: 250px;
+  height: 350px;
+  background-color: white;
+
+}
+.Click-photo-page{
+  width: 100%;
+  height: 285px;
+  background : url("Image/original-6b11cbb03d2fe31957fa7952698c2e9d.webp") ;
+}
+.Title-click-page{
+  width: 100%;
+  height: 40px;
+  background-color: black;
+}
+
+.Stars-click-page {
+  text-align: center;
+  width: 100%;
+  height: 25px;
+  background-image: url('Image/star-images-9457.png'); /* Шлях до зображення однієї зірочки */
+  background-repeat: repeat-x; /* Повторюємо горизонтально */
+  background-size: 25px; /* Розмір мотиву - 30px */
+  background-color: black; /* Прозорий фон */
+}
+
