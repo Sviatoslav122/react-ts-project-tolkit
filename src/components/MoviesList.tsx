@@ -1,5 +1,7 @@
 import React from 'react';
 
+import {NavLink} from "react-router-dom";
+import{Outlet} from "react-router-dom";
 
 function MoviesList() {
     return (
@@ -9,13 +11,17 @@ function MoviesList() {
                 <button className="clicker-button" id="Right-clicker" ></button>
 
             </div>
+
             <div className="Container-Movies">
+                <NavLink to="../container/MoviesPage">
                 <div className="click-movies-page">
-                    <div className="Click-photo-page"></div>
+                    <div className="Click-photo-page">
+                        <Outlet />
+                    </div>
                     <div className="Title-click-page"><p>Ferma Clarksona</p></div>
 
                    <div className="Stars-click-page"></div>
-                </div>
+                </div> </NavLink>
             </div>
 
         </div>

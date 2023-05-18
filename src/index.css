@@ -120,11 +120,16 @@ p {
   height: 50px;
   background-color: transparent;
 }
-.Container-Movies{
+.Container-Movies {
   width: 1100px;
-  height: 700px;
-
+  height: 900px;
   background-color: red;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  overflow-y: auto;
+  margin-top: 250px; /* Враховуючи висоту хедеру */
 }
 
 
@@ -197,9 +202,80 @@ p {
   text-align: center;
   width: 100%;
   height: 25px;
-  background-image: url('Image/star-images-9457.png'); /* Шлях до зображення однієї зірочки */
-  background-repeat: repeat-x; /* Повторюємо горизонтально */
-  background-size: 25px; /* Розмір мотиву - 30px */
-  background-color: black; /* Прозорий фон */
+  background-image: url('Image/star-images-9457.png');
+  background-repeat: repeat-x;
+  background-size: 25px;
+  background-color: black;
 }
+.moviespage-back{
 
+  height: 1000px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: no-repeat center/100% url("Image/original-6b11cbb03d2fe31957fa7952698c2e9d.webp") ;
+}
+.main-page-films {
+  background-color: black;
+  width: 80%;
+  height: 70vh; /* Встановлюємо висоту у відсотках від висоти екрану */
+  position: fixed;
+  top: 55%; /* Початкове положення у вертикальному центрі */
+  left: 50%; /* Початкове положення у горизонтальному центрі */
+  transform: translate(-50%, -50%); /* Переміщуємо по центру екрану */
+}
+.main-page-films{
+  background-color: gray;
+  display: flex;
+  justify-content: space-between;
+
+}
+.Left-container{
+  width: 300px;
+  height:500px;
+  background-color: green;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+ align-items: center;
+
+}
+.Right-container{
+  width: 250px;
+  height: 500px;
+  background-color: red;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.moviespage-title-films{
+  width: 300px;
+  height: 80px;
+  background-color: lightblue;
+}
+.container-star-genre{
+  display: flex;
+  justify-content: start;
+  background-color: white;
+  width: 300px;
+  height: 60px;
+
+}
+.description-film{
+  width: 300px;
+  height: 100px;
+  background-color: darkolivegreen;
+  text-align: start;
+  font-size: 10px;
+}
+.play-film{
+  width: 300px ;
+  height: 80px;
+  background-color: white;
+}
+.triller-moviespage{
+  width: 250px;
+  height: 150px;
+  background-color: blue;
+}
