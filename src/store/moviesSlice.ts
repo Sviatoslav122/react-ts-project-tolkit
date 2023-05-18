@@ -8,7 +8,6 @@ export interface MoviesState {
 const initialState: MoviesState = {
     value: []
 }
-
 export const moviesSlice = createSlice({
     name: 'movies',
     initialState,
