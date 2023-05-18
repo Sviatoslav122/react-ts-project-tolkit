@@ -16,10 +16,10 @@ function Header() {
             </div>
             <div className='nav-menu'>
                 <NavLink to="/">
-                    Dashboard
+                    <h3 className="hover-3">Dashboard</h3>
                 </NavLink>
                 <NavLink to="/movieslist">
-                    Movies List
+                    <h3 className="hover-3">Movie List</h3>
                 </NavLink>
             </div>
         </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Input} from "antd";
+
 
 function Dashboard() {
     return (
@@ -7,8 +7,18 @@ function Dashboard() {
 
             <div className="dashboard-info">
                 <h1>Watch our films</h1>
-                <p>Description</p>
-                <Input placeholder="Write your film" />
+                <p>Enter keywords</p>
+                <div className="searchBox">
+                    <input className="searchInput" type="text" name="" placeholder="Search" />
+                    <button className="searchButton" >
+                        <i className="material-icons">
+                            search
+                        </i>
+                    </button>
+                </div>
+
+
+
             </div>
 
         </div>
