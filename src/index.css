@@ -8,12 +8,12 @@ html {
 }
 
 body {
-
+background-image: url("Image/original-6b11cbb03d2fe31957fa7952698c2e9d.webp");
   margin: 0;
   padding: 0;
   min-width: 320px;
   width: 100%;
-  color: silver;
+  color: silver ;
 }
 
 a {
@@ -50,7 +50,15 @@ p {
   margin: 0;
   font-weight: normal;
 }
+body.dark-theme {
+  background-color: #333;
+  color: red !important ;
+  font-size: 50px;
+}
 
+.custom-switch{
+  background: white;
+}
 .header {
   width: 1100px;
   display: flex;
@@ -62,6 +70,16 @@ p {
   left: 50%;
   transform: translateX(-50%);
   background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
+
+}
+.light .header {
+  background-color: white;
+  color: black;
+}
+
+.dark .header {
+  background-color: black;
+  color: white;
 }
 
 .header .nav-menu a {
@@ -122,101 +140,119 @@ p {
 .clicker-top{
   display: flex;
   justify-content: space-between;
-
+  margin-bottom: 10px;
   position: fixed;
   left: 50%;
   transform: translateX(-50%);
 
-  width: 1150px;
+  width: 1200px;
   height: 50px;
   background-color: transparent;
 }
 .Container-Movies {
   width: 1100px;
-  height: 900px;
+  height: 600px;
   background: linear-gradient(to right, rgba(15, 12, 41, 0.5), rgba(48, 43, 99, 0.5), rgba(36, 36, 62, 0.5));
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   overflow-y: auto;
-  margin-top: 250px; /* Враховуючи висоту хедеру */
+  margin-top: 75px; /* Враховуючи висоту хедеру */
+  padding: 15px;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  align-content: space-between;
 }
 
+.Container-Movies::-webkit-scrollbar {
+  width: 8px;
+}
+
+.Container-Movies::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.Container-Movies::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 4px;
+}
+
+.Container-Movies::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.6);
+}
 
 .clicker-button {
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
+
   border: none;
-  background-color: transparent;
-  outline: none;
+  padding: 10px;
   cursor: pointer;
-  position: relative;
+  font-size: 16px;
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+#Left-clicker {
+  background-image: url("Image/icons8-right-button-48.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  transform: scaleX(-1);
 }
 
-.clicker-button::before {
-  content: "";
-  display: block;
-  width: 0;
-  height: 0;
-  border-top: 10px solid transparent;
-  border-bottom: 10px solid transparent;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  transition: all 0.2s ease; /* Анімація зміни кольору та розміру */
+#Right-clicker{
+  background-image: url("Image/icons8-right-button-48.png");
 }
-
-#Left-clicker::before {
-  border-right: 10px solid black;
-  left: 10px;
+.clicker-button:focus {
+  outline: none;
 }
-
-#Right-clicker::before {
-  border-left: 10px solid black;
-  left: 20px;
-}
-
-.clicker-button:hover::before {
-
-  transform: translateY(-50%) scale(1.2);
+.clicker-button:hover {
+  background: linear-gradient(to right, rgba(15, 12, 41, 0.5), rgba(48, 43, 99, 0.5), rgba(36, 36, 62, 0.5));
 }
 
 
-.Container-Movies{
- padding: 15px;
-  display: flex;
-  justify-content: space-between;
-}
-.click-movies-page{
+.click-movies-page {
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
   width: 250px;
-  height: 350px;
-  background-color: white;
-
+  height: 360px;
+  margin: 5px;
+  background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
+  border: 2px solid #302b63;
+  transition: transform 0.3s ease;
 }
+.click-movies-page:hover {
+  transform: scale(1.1); /* Збільшення масштабу при наведенні */
+}
+
 .Click-photo-page{
   width: 100%;
-  height: 285px;
-  background : url("Image/original-6b11cbb03d2fe31957fa7952698c2e9d.webp") ;
+  height: 300px;
+  background : no-repeat center/100%;
+}
+.Movies-img{  width: 246px;
+  height: 300px;
 }
 .Title-click-page{
   width: 100%;
   height: 40px;
-  background-color: black;
+  background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
+  text-align: center;
 }
 
 .Stars-click-page {
   text-align: center;
   width: 100%;
   height: 25px;
-  background-image: url('Image/star-images-9457.png');
   background-repeat: repeat-x;
   background-size: 25px;
-  background-color: black;
+  background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
 }
 .moviespage-back{
 
@@ -227,68 +263,132 @@ p {
   justify-content: center;
   background: no-repeat center/100% url("Image/original-6b11cbb03d2fe31957fa7952698c2e9d.webp") ;
 }
-.main-page-films {
-  background-color: black;
-  width: 80%;
-  height: 70vh; /* Встановлюємо висоту у відсотках від висоти екрану */
+
+.main-page-films{
+  height: 70vh;
   position: fixed;
   top: 55%; /* Початкове положення у вертикальному центрі */
   left: 50%; /* Початкове положення у горизонтальному центрі */
   transform: translate(-50%, -50%); /* Переміщуємо по центру екрану */
-}
-.main-page-films{
-  background-color: gray;
+  width: 1100px;
   display: flex;
+  background-size: contain;
   justify-content: space-between;
+  align-items: center;
+
 
 }
+
+
+
 .Left-container{
+  text-align: center;
   width: 300px;
   height:500px;
-  background-color: green;
+  background: linear-gradient(to right, rgba(15, 12, 41, 0.3), rgba(48, 43, 99, 0.3), rgba(36, 36, 62, 0.3));
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   flex-direction: column;
  align-items: center;
 
 }
 .Right-container{
+  text-align: center;
   width: 250px;
   height: 500px;
-  background-color: red;
+  background: linear-gradient(to right, rgba(15, 12, 41, 0.3), rgba(48, 43, 99, 0.3), rgba(36, 36, 62, 0.3));
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
+  flex-direction: column;
+}
+.Genere-moviespage{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 250px;
+  height: 200px;
+
+}
+.Genere{
+  display: inline-block;
+  padding: 1rem 2rem;
+  background:linear-gradient(to right, #0f0c29, #302b63, #24243e);
+  color: #FFF;
+
+  border-radius: 20%;
+  font-size: 10px;
 }
 .moviespage-title-films{
+  text-align: center;
   width: 300px;
   height: 80px;
-  background-color: lightblue;
+  background: transparent;
+  color: white;
+  font-size: 30px;
 }
 .container-star-genre{
-  display: flex;
-  justify-content: start;
-  background-color: white;
+
+  background: transparent;
   width: 300px;
   height: 60px;
+  text-align: center;
+  color: white;
+  font-size: 20px;
 
 }
 .description-film{
   width: 300px;
   height: 100px;
-  background-color: darkolivegreen;
-  text-align: start;
+  background: transparent;
+display: flex;
+  justify-content: center;
+  align-items: center;
   font-size: 10px;
+  color: white;
+  text-align: center;
+  transition: all 0.3s ease;
+
 }
-.play-film{
-  width: 300px ;
-  height: 80px;
-  background-color: white;
+
+.description-film:hover {
+  transform: scale(1.5); /* Збільшуємо розмір в 2 рази */
+  font-size: 10px; /* Змінюємо розмір шрифту */
+  background: linear-gradient(to right, rgba(15, 12, 41, 0.5), rgba(48, 43, 99, 0.5), rgba(36, 36, 62, 0.5));
+  border: solid #0f0c29 1px;
+
+
+}
+
+.play-film {
+  display: inline-block;
+  padding: 1rem 2rem;
+  background:linear-gradient(to right, #0f0c29, #302b63, #24243e);
+  color: #FFF;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 20%;
+  transition: background-color 0.1s ease;
+  cursor: pointer;
+}
+
+.play-film:hover {
+  background: #302b63;
+}
+
+.play-film:before {
+  content: "\25B6";
 }
 .triller-moviespage{
   width: 250px;
-  height: 150px;
-  background-color: blue;
+  height: 200px;
+  background: transparent;
+  text-align: center;
+  border: solid black 2px;
+
 }
 .searchBox {
 
@@ -363,4 +463,3 @@ p {
   --_p: 100%;
   --_s: 0.3s;
 }
-

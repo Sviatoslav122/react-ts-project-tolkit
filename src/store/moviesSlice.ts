@@ -1,23 +1,36 @@
-import { createSlice } from '@reduxjs/toolkit'
-import type { PayloadAction } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-export interface MoviesState {
-    value: any[]
+interface Video {
+    id: string;
+    key: string;
+    name: string;
+    site: string;
+}
+
+interface MoviesState {
+    value: any[]; // Змініть тип на відповідний, залежно від структури даних, яку очікується
+    videos: Record<number, Video[]>;
 }
 
 const initialState: MoviesState = {
-    value: []
-}
-export const moviesSlice = createSlice({
+    value: [],
+    videos: {},
+};
+
+const moviesSlice = createSlice({
     name: 'movies',
     initialState,
     reducers: {
         setReduxMovies: (state, action: PayloadAction<any>) => {
-            state.value = action.payload
+            state.value = action.payload;
+        },
+        setVideos: (state, action: PayloadAction<{ movieId: number; videos: Video[] }>) => {
+            const { movieId, videos } = action.payload;
+            state.videos[movieId] = videos;
         },
     },
-})
+});
 
-export const { setReduxMovies } = moviesSlice.actions
+export const { setReduxMovies, setVideos } = moviesSlice.actions;
 
-export default moviesSlice.reducer
+export default moviesSlice.reducer;

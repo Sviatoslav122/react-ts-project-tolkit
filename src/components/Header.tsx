@@ -1,20 +1,29 @@
 import React from 'react';
 import { UserOutlined } from '@ant-design/icons';
 import { Avatar, Switch } from 'antd';
-import {NavLink} from "react-router-dom";
-
+import { NavLink } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../store/store';
+import { setDarkMode } from './themeSlice';
+import './theme.less'
 function Header() {
+    const dispatch = useDispatch();
+    const darkMode = useSelector((state: RootState) => state.theme.darkMode);
+
+
     const onChange = (checked: boolean) => {
-        console.log(`switch to ${checked}`);
+        dispatch(setDarkMode(checked));
+        console.log('onChange(true)')
+
     };
 
     return (
-        <div className='header'>
-            <div className='buttons'>
-                <Switch defaultChecked onChange={onChange} />
+        <div className={`header ${darkMode ? 'dark' : 'light'}`}>
+            <div className="buttons">
+                <Switch defaultChecked={darkMode} onChange={onChange} />
                 <Avatar size={64} icon={<UserOutlined />} />
             </div>
-            <div className='nav-menu'>
+            <div className="nav-menu ">
                 <NavLink to="/">
                     <h3 className="hover-3">Dashboard</h3>
                 </NavLink>
@@ -25,5 +34,6 @@ function Header() {
         </div>
     );
 }
+
 
 export default Header;
