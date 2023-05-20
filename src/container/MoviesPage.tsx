@@ -2,7 +2,6 @@ import React from 'react';
 import CustomStarRatings from "../components/StarRatings";
 
 const MoviesPage = () => {
-
     // Отримання значень з параметрів запиту
     const searchParams = new URLSearchParams(window.location.search);
     const title = searchParams.get('title');
@@ -12,22 +11,25 @@ const MoviesPage = () => {
     const genre_ids = searchParams.get('genre_ids');
     const genreNames = genre_ids?.split(','); // Розбиваємо рядок на масив назв жанрів
     const video_key = searchParams.get('video_key'); // Отримуємо ключ відео з параметрів запиту
+    const link = searchParams.get('link');
 
     // Формуємо URL для вставки відео
     const videoUrl = video_key ? `https://www.youtube.com/watch?v=${video_key}` : '';
 
     return (
         <div className="moviespage-back">
-            <div className="main-page-films" style={{ backgroundImage: `url(https://image.tmdb.org/t/p/w500/${poster_path})` }}>
+            <div className="main-page-films" style={{ backgroundImage: `url(https://image.tmdb.org/t/p/original/${poster_path})` }}>
+
                 <div className="Left-container">
                     <div className="moviespage-title-films"><p className="bold-and-thick-text"> {title} </p></div>
                     <div className="container-star-genre">
                         <CustomStarRatings rating={voteAverage} />
                     </div>
                     <div className="description-film">{overview}</div>
-                    {videoUrl && (
+
+                    {link && (
                         <div className="play-film">
-                            <a href={videoUrl} target="_blank" rel="noopener noreferrer">
+                            <a href={link} target="_blank" rel="noopener noreferrer">
                                 Play Film
                             </a>
                         </div>
@@ -42,8 +44,8 @@ const MoviesPage = () => {
                     <div className="triller-moviespage">
                         {videoUrl && (
                             <iframe
-                                width="560"
-                                height="315"
+                                width="250"
+                                height="200"
                                 src={`https://www.youtube.com/embed/${video_key}`}
                                 title="Movie Trailer"
                                 // frameBorder="0"

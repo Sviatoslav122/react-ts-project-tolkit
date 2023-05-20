@@ -23,9 +23,10 @@ function Header() {
                 <Switch defaultChecked={darkMode} onChange={onChange} />
                 <Avatar size={64} icon={<UserOutlined />} />
             </div>
+
             <div className="nav-menu ">
                 <NavLink to="/">
-                    <h3 className="hover-3">Dashboard</h3>
+                    <h3 className="hover-3">Search</h3>
                 </NavLink>
                 <NavLink to="/movieslist">
                     <h3 className="hover-3">Movie List</h3>

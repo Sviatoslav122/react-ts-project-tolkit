@@ -28,7 +28,7 @@ function MoviesList() {
                 dispatch(setReduxMovies(response.data.results));
                 setTotalPages(response.data.total_pages);
             } catch (error) {
-                console.error('Error fetching movies:', error);
+                console.error('Помилка отримання фільмів:', error);
             }
         };
 
@@ -44,7 +44,7 @@ function MoviesList() {
                 );
                 setGenres(response.data.genres);
             } catch (error) {
-                console.error('Error fetching genres:', error);
+                console.error('Помилка отримання жанрів:', error);
             }
         };
 
@@ -52,25 +52,26 @@ function MoviesList() {
     }, []);
 
     useEffect(() => {
-        // Отримання ключів відео для кожного фільму
+        // Отримання відео для фільмів
         const getMovieVideos = async () => {
             try {
                 const updatedMovies = await Promise.all(
                     movies.map(async (elem) => {
-                        const response = await axios.get(
+                        const videoResponse = await axios.get(
                             `https://api.themoviedb.org/3/movie/${elem.id}/videos?api_key=2ceecf640529ef207eecafa394b1c4d6`
                         );
-                        const videoKey = response.data.results[0]?.key || ''; // Отримати перший ключ відео (якщо є)
+                        const videoKey = videoResponse.data.results[0]?.key || '';
+
                         return {
                             ...elem,
-                            videoKey: videoKey
+                            videoKey: videoKey,
                         };
                     })
                 );
 
                 dispatch(setReduxMovies(updatedMovies));
             } catch (error) {
-                console.error('Error fetching movie videos:', error);
+                console.error('Помилка отримання відео для фільмів:', error);
             }
         };
 
@@ -79,18 +80,43 @@ function MoviesList() {
         }
     }, [movies, dispatch]);
 
-    const handlePrevious = () => {
-        // Логіка для перегортування сторінок назад
-        if (page > 1) {
-            setPage(page - 1);
+    useEffect(() => {
+        // Отримання постачальників для фільмів
+        const getMovieProviders = async () => {
+            try {
+                const updatedMovies = await Promise.all(
+                    movies.map(async (elem) => {
+                        const providersResponse = await axios.get(
+                            `https://api.themoviedb.org/3/movie/${elem.id}/watch/providers?api_key=2ceecf640529ef207eecafa394b1c4d6`
+                        );
+                        const link = providersResponse.data?.results?.CA?.link || '';
+
+                        return {
+                            ...elem,
+                            link: link,
+                        };
+                    })
+                );
+
+                dispatch(setReduxMovies(updatedMovies));
+            } catch (error) {
+                console.error('Помилка отримання постачальників для фільмів:', error);
+            }
+        };
+
+        if (movies && movies.length > 0) {
+            getMovieProviders();
         }
+    }, [movies, dispatch]);
+
+    const handlePrevious = () => {
+        // Логіка для переключення на попередню сторінку
+        setPage((prevPage) => (prevPage > 1 ? prevPage - 1 : prevPage));
     };
 
     const handleNext = () => {
-        // Логіка для перегортування сторінок вперед
-        if (page < totalPages) {
-            setPage(page + 1);
-        }
+        // Логіка для переключення на наступну сторінку
+        setPage((prevPage) => (prevPage < totalPages ? prevPage + 1 : prevPage));
     };
 
     return (
@@ -106,16 +132,17 @@ function MoviesList() {
                         const genreNames = elem.genre_ids
                             .map((genreId: number) => genres.find((genre: Genre) => genre.id === genreId)?.name)
                             .filter(Boolean)
-                            .join(', '); // Об'єднати назви жанрів розділеними комами
+                            .join(', ');
 
                         return (
                             <NavLink
                                 to={`../container/MoviesPage?title=${elem.title}
-                &overview=${elem.overview}
-                &vote_average=${elem.vote_average}
-                &poster_path=${elem.poster_path}
-                &video_key=${elem.videoKey}
-                &genre_ids=${genreNames}`} // Передати назви жанрів замість ідентифікаторів
+                                &overview=${elem.overview}
+                                &vote_average=${elem.vote_average}
+                                &poster_path=${elem.poster_path}
+                                &video_key=${elem.videoKey}
+                                &genre_ids=${genreNames}
+                                &link=${elem.link}`}
                                 key={elem.id}
                             >
                                 <div className="click-movies-page">
@@ -129,9 +156,7 @@ function MoviesList() {
                                     <div className="Title-click-page" style={{ color: 'white' }}>
                                         {elem.original_title}
                                     </div>
-                                    <div className="Genres-click-page">
-
-                                    </div>
+                                    <div className="Genres-click-page">{genreNames}</div>
                                     <div className="Stars-click-page">
                                         <CustomStarRatings rating={elem.vote_average} />
                                     </div>
@@ -140,7 +165,7 @@ function MoviesList() {
                         );
                     })
                 ) : (
-                    <div>No movies found.</div>
+                    <div>Фільми не знайдені.</div>
                 )}
             </div>
         </div>

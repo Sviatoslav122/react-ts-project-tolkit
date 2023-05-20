@@ -8,7 +8,7 @@ interface Video {
 }
 
 interface MoviesState {
-    value: any[]; // Змініть тип на відповідний, залежно від структури даних, яку очікується
+    value: any[];
     videos: Record<number, Video[]>;
 }
 
