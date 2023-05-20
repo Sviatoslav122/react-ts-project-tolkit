@@ -3,19 +3,24 @@ import axios from 'axios';
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store/store';
-import { setReduxMovies, setVideos } from '../store/moviesSlice';
+import { setReduxMovies } from '../store/moviesSlice';
 import CustomStarRatings from './StarRatings';
 
+interface Genre {
+    id: number;
+    name: string;
+}
 
 function MoviesList() {
     const [page, setPage] = useState(1); // Поточна сторінка
     const [totalPages, setTotalPages] = useState(0); // Загальна кількість сторінок
+    const [genres, setGenres] = useState<Genre[]>([]); // Список жанрів
     const movies = useSelector((state: RootState) => state.movies.value);
     const dispatch = useDispatch();
 
     useEffect(() => {
         // Отримання списку фільмів з API
-        const fetchMovies = async () => {
+        const getMovies = async () => {
             try {
                 const response = await axios.get(
                     `https://api.themoviedb.org/3/movie/popular?api_key=2ceecf640529ef207eecafa394b1c4d6&page=${page}`
@@ -27,20 +32,52 @@ function MoviesList() {
             }
         };
 
-        fetchMovies();
+        getMovies();
     }, [page, dispatch]);
 
-    const fetchVideos = async (movieId: number) => {
-        try {
-            const response = await axios.get(
-                `https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=2ceecf640529ef207eecafa394b1c4d6`
-            );
-            const videos = response.data.results;
-            dispatch(setVideos({ movieId, videos }));
-        } catch (error) {
-            console.error('Error fetching videos:', error);
+    useEffect(() => {
+        // Отримання списку жанрів з API
+        const getGenres = async () => {
+            try {
+                const response = await axios.get(
+                    'https://api.themoviedb.org/3/genre/movie/list?api_key=2ceecf640529ef207eecafa394b1c4d6'
+                );
+                setGenres(response.data.genres);
+            } catch (error) {
+                console.error('Error fetching genres:', error);
+            }
+        };
+
+        getGenres();
+    }, []);
+
+    useEffect(() => {
+        // Отримання ключів відео для кожного фільму
+        const getMovieVideos = async () => {
+            try {
+                const updatedMovies = await Promise.all(
+                    movies.map(async (elem) => {
+                        const response = await axios.get(
+                            `https://api.themoviedb.org/3/movie/${elem.id}/videos?api_key=2ceecf640529ef207eecafa394b1c4d6`
+                        );
+                        const videoKey = response.data.results[0]?.key || ''; // Отримати перший ключ відео (якщо є)
+                        return {
+                            ...elem,
+                            videoKey: videoKey
+                        };
+                    })
+                );
+
+                dispatch(setReduxMovies(updatedMovies));
+            } catch (error) {
+                console.error('Error fetching movie videos:', error);
+            }
+        };
+
+        if (movies && movies.length > 0) {
+            getMovieVideos();
         }
-    };
+    }, [movies, dispatch]);
 
     const handlePrevious = () => {
         // Логіка для перегортування сторінок назад
@@ -65,28 +102,43 @@ function MoviesList() {
 
             <div className="Container-Movies">
                 {movies ? (
-                    movies.map((elem) => (
-                        <NavLink
-                            to={`../container/MoviesPage?title=${elem.title}
-                            &overview=${elem.overview}
-                           &vote_average=${elem.vote_average}
-                            &poster_path=${elem.poster_path}
-                            &genre_ids=${elem.genre_ids}`}
-                            key={elem.id}
-                            onClick={() => fetchVideos(elem.id)}
-                        >
-                            <div className="click-movies-page">
-                                <div className="Click-photo-page">
-                                    <img className="Movies-img" src={`https://image.tmdb.org/t/p/w500/${elem.poster_path}`} alt={elem.original_title} />
-                                </div>
-                                <div className="Title-click-page" style={{ color: 'white' }}>{elem.original_title}</div>
-                                <div className="Stars-click-page">
-                                    <CustomStarRatings rating={elem.vote_average} />
-                                </div>
-                                </div>
+                    movies.map((elem) => {
+                        const genreNames = elem.genre_ids
+                            .map((genreId: number) => genres.find((genre: Genre) => genre.id === genreId)?.name)
+                            .filter(Boolean)
+                            .join(', '); // Об'єднати назви жанрів розділеними комами
 
-                        </NavLink>
-                    ))
+                        return (
+                            <NavLink
+                                to={`../container/MoviesPage?title=${elem.title}
+                &overview=${elem.overview}
+                &vote_average=${elem.vote_average}
+                &poster_path=${elem.poster_path}
+                &video_key=${elem.videoKey}
+                &genre_ids=${genreNames}`} // Передати назви жанрів замість ідентифікаторів
+                                key={elem.id}
+                            >
+                                <div className="click-movies-page">
+                                    <div className="Click-photo-page">
+                                        <img
+                                            className="Movies-img"
+                                            src={`https://image.tmdb.org/t/p/w500/${elem.poster_path}`}
+                                            alt={elem.original_title}
+                                        />
+                                    </div>
+                                    <div className="Title-click-page" style={{ color: 'white' }}>
+                                        {elem.original_title}
+                                    </div>
+                                    <div className="Genres-click-page">
+
+                                    </div>
+                                    <div className="Stars-click-page">
+                                        <CustomStarRatings rating={elem.vote_average} />
+                                    </div>
+                                </div>
+                            </NavLink>
+                        );
+                    })
                 ) : (
                     <div>No movies found.</div>
                 )}

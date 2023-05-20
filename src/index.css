@@ -386,9 +386,10 @@ display: flex;
   width: 250px;
   height: 200px;
   background: transparent;
-  text-align: center;
-  border: solid black 2px;
-
+}
+.video-triler{
+  width: 250px;
+  height: 200px;
 }
 .searchBox {
 
@@ -462,4 +463,7 @@ display: flex;
 .hover-3:hover {
   --_p: 100%;
   --_s: 0.3s;
+}
+.bold-and-thick-text {
+  font-weight: bolder;
 }
