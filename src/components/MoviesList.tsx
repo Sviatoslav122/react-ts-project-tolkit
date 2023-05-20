@@ -5,24 +5,21 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store/store';
 import { setReduxMovies } from '../store/moviesSlice';
 import CustomStarRatings from './StarRatings';
-import {setDarkMode} from "./themeSlice";
+
 
 interface Genre {
     id: number;
     name: string;
 }
 
-function MoviesList(darkMode: React.CSSProperties | undefined) {
+function MoviesList() {
+    const darkMode = useSelector((state: RootState) => state.theme.darkMode);
     const [page, setPage] = useState(1); // Поточна сторінка
     const [totalPages, setTotalPages] = useState(0); // Загальна кількість сторінок
     const [genres, setGenres] = useState<Genre[]>([]); // Список жанрів
     const movies = useSelector((state: RootState) => state.movies.value);
     const dispatch = useDispatch();
-    const onChange = (checked: boolean) => {
-        dispatch(setDarkMode(checked));
-        console.log('mode', darkMode)
 
-    };
     useEffect(() => {
         // Отримання списку фільмів з API
         const getMovies = async () => {
@@ -71,7 +68,7 @@ function MoviesList(darkMode: React.CSSProperties | undefined) {
 
     return (
 
-        <div className="Container-MovieList">
+        <div className={`Container-MovieList ${darkMode ? 'dark' : 'light'}`} style={darkMode ? { background: '#000' } : {}}>
             <div className="clicker-top">
                 <button className="clicker-button" id="Left-clicker" onClick={handlePrevious}></button>
                 <button className="clicker-button" id="Right-clicker" onClick={handleNext}></button>

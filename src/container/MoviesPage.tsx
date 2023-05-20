@@ -18,7 +18,6 @@ const MoviesPage = () => {
 
     useEffect(() => {
         movieID ?
-            // Отримання відео для фільмів
             axios.get(
                 `https://api.themoviedb.org/3/movie/${movieID}/videos?api_key=2ceecf640529ef207eecafa394b1c4d6`
             ).then((res) => {
@@ -26,6 +25,7 @@ const MoviesPage = () => {
                 setMovieTrailer(res.data.results[0]?.key);
             }) :
             console.log('No Movie ID')
+
     }, []);
 
     useEffect(() => {
