@@ -7,21 +7,21 @@ import MoviesPage from "./container/MoviesPage";
 
 
 function App() {
-  return (
-      <>
-        <BrowserRouter>
+    return (
+        <>
+            <BrowserRouter>
 
-          <Header />
-          <Routes>
-            <Route path="/" element={<Dashboard />} />
-            <Route path="movieslist" element={<MoviesList />} />
-              <Route path="container/moviespage" element={<MoviesPage/>} />
+                <Header />
+                <Routes>
+                    <Route path="/" element={<Dashboard />} />
+                    <Route path="movieslist" element={<MoviesList />} />
+                    <Route path="container/moviespage" element={<MoviesPage/>} />
 
 
-          </Routes>
-        </BrowserRouter>
-      </>
-  );
+                </Routes>
+            </BrowserRouter>
+        </>
+    );
 }
 
 export default App;

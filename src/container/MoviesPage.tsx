@@ -1,20 +1,44 @@
-import React from 'react';
+
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import CustomStarRatings from "../components/StarRatings";
 
 const MoviesPage = () => {
-    // Отримання значень з параметрів запиту
+    const [movieTrailer, setMovieTrailer] = useState([])
+    const [movieVideo, setMovieVideo] = useState([])
+
     const searchParams = new URLSearchParams(window.location.search);
     const title = searchParams.get('title');
     const overview = searchParams.get('overview');
     const voteAverage = searchParams.get('vote_average') ? parseFloat(searchParams.get('vote_average')!) : 0;
     const poster_path = searchParams.get('poster_path');
     const genre_ids = searchParams.get('genre_ids');
+    const movieID = searchParams.get('movie_id');
     const genreNames = genre_ids?.split(','); // Розбиваємо рядок на масив назв жанрів
-    const video_key = searchParams.get('video_key'); // Отримуємо ключ відео з параметрів запиту
-    const link = searchParams.get('link');
 
-    // Формуємо URL для вставки відео
-    const videoUrl = video_key ? `https://www.youtube.com/watch?v=${video_key}` : '';
+    useEffect(() => {
+        movieID ?
+            // Отримання відео для фільмів
+            axios.get(
+                `https://api.themoviedb.org/3/movie/${movieID}/videos?api_key=2ceecf640529ef207eecafa394b1c4d6`
+            ).then((res) => {
+                // @ts-ignore
+                setMovieTrailer(res.data.results[0]?.key);
+            }) :
+            console.log('No Movie ID')
+    }, []);
+
+    useEffect(() => {
+        movieID ?
+            // Отримання постачальників для фільмів
+            axios.get(
+                `https://api.themoviedb.org/3/movie/${movieID}/watch/providers?api_key=2ceecf640529ef207eecafa394b1c4d6`
+            ).then((res) => {
+                // @ts-ignore
+                setMovieVideo(res.data?.results?.CA?.link);
+            }) :
+            console.log('No Movie ID')
+    }, []);
 
     return (
         <div className="moviespage-back">
@@ -27,9 +51,10 @@ const MoviesPage = () => {
                     </div>
                     <div className="description-film">{overview}</div>
 
-                    {link && (
+                    {movieVideo && (
                         <div className="play-film">
-                            <a href={link} target="_blank" rel="noopener noreferrer">
+                            {/*@ts-ignore*/}
+                            <a href={movieVideo} target="_blank" rel="noopener noreferrer">
                                 Play Film
                             </a>
                         </div>
@@ -42,11 +67,11 @@ const MoviesPage = () => {
                         ))}
                     </div>
                     <div className="triller-moviespage">
-                        {videoUrl && (
+                        {movieTrailer && (
                             <iframe
                                 width="250"
                                 height="200"
-                                src={`https://www.youtube.com/embed/${video_key}`}
+                                src={`https://www.youtube.com/embed/${movieTrailer}`}
                                 title="Movie Trailer"
                                 // frameBorder="0"
                                 allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"

@@ -13,12 +13,12 @@ function Header() {
 
     const onChange = (checked: boolean) => {
         dispatch(setDarkMode(checked));
-        console.log('onChange(true)')
+        console.log('mode', darkMode)
 
     };
 
     return (
-        <div className={`header ${darkMode ? 'dark' : 'light'}`}>
+        <div className={`header ${darkMode ? 'dark' : 'light'}`} style={darkMode ? { background: 'black' } : { background : 'linear-gradient(to right, #0f0c29, #302b63, #24243e)'}}>
             <div className="buttons">
                 <Switch defaultChecked={darkMode} onChange={onChange} />
                 <Avatar size={64} icon={<UserOutlined />} />
