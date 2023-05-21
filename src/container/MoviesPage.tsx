@@ -14,7 +14,7 @@ const MoviesPage = () => {
     const poster_path = searchParams.get('poster_path');
     const genre_ids = searchParams.get('genre_ids');
     const movieID = searchParams.get('movie_id');
-    const genreNames = genre_ids?.split(','); // Розбиваємо рядок на масив назв жанрів
+    const genreNames = genre_ids?.split(',');
 
     useEffect(() => {
         movieID ?
@@ -30,7 +30,6 @@ const MoviesPage = () => {
 
     useEffect(() => {
         movieID ?
-            // Отримання постачальників для фільмів
             axios.get(
                 `https://api.themoviedb.org/3/movie/${movieID}/watch/providers?api_key=2ceecf640529ef207eecafa394b1c4d6`
             ).then((res) => {

@@ -15,13 +15,13 @@ interface Genre {
 function MoviesList() {
     const darkMode = useSelector((state: RootState) => state.theme.darkMode);
     const [page, setPage] = useState(1); // Поточна сторінка
-    const [totalPages, setTotalPages] = useState(0); // Загальна кількість сторінок
+    const [totalPages, setTotalPages] = useState(0);
     const [genres, setGenres] = useState<Genre[]>([]); // Список жанрів
     const movies = useSelector((state: RootState) => state.movies.value);
     const dispatch = useDispatch();
 
     useEffect(() => {
-        // Отримання списку фільмів з API
+        // Отримання фільмів з API
         const getMovies = async () => {
             try {
                 const response = await axios.get(
@@ -40,7 +40,7 @@ function MoviesList() {
     }, [page]);
 
     useEffect(() => {
-        // Отримання списку жанрів з API
+        // Отриманняжанрів з API
         const getGenres = async () => {
             try {
                 const response = await axios.get(
@@ -56,12 +56,10 @@ function MoviesList() {
     }, []);
 
     const handlePrevious = () => {
-        // Логіка для переключення на попередню сторінку
         setPage((prevPage) => (prevPage > 1 ? prevPage - 1 : prevPage));
     };
 
     const handleNext = () => {
-        // Логіка для переключення на наступну сторінку
         setPage((prevPage) => (prevPage < totalPages ? prevPage + 1 : prevPage));
     };
 

@@ -28,7 +28,8 @@ function Dashboard() {
     };
 
     const handleOk = () => {
-        setIsModalOpen(false);
+        setIsModalOpen(true);
+        handleSearchMovie();
     };
 
     const handleCancel = () => {
@@ -46,7 +47,6 @@ function Dashboard() {
             })
             .catch((err) => console.error('error:' + err));
 
-        // setSearchedMovie('')
     };
 
     return (
@@ -79,7 +79,7 @@ function Dashboard() {
                         &overview=${findedMovie[0].overview}
                         &vote_average=${findedMovie[0].vote_average}
                         &poster_path=${findedMovie[0].poster_path}
-                        &genre_ids=${findedMovie[0].genre_ids}
+                         
                         &movie_id=${findedMovie[0].id}
                         `}
                     >
